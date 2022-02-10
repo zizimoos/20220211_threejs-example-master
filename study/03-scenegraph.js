@@ -54,11 +54,11 @@ class App {
 			widthSegments,
 			heightSegments
 		);
-
 		const sunMaterial = new THREE.MeshPhongMaterial({
 			emissive: 0xffff00,
 			flatShading: true,
 		});
+
 		const sunMesh = new THREE.Mesh(sphereGeometry, sunMaterial);
 		solarSystem.add(sunMesh);
 		sunMesh.scale.set(3, 3, 3);
@@ -70,6 +70,7 @@ class App {
 			emissive: 0x112244,
 			flatShading: true,
 		});
+
 		const earthMesh = new THREE.Mesh(sphereGeometry, earthMaterial);
 		earthOribit.add(earthMesh);
 		earthOribit.position.x = 10;
@@ -115,6 +116,7 @@ class App {
 		this._moonOribit.rotation.y = time * 5;
 	}
 }
+
 window.onload = function () {
 	new App();
 };

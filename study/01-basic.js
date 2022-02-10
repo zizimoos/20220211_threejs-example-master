@@ -20,7 +20,7 @@ class App {
 		window.onresize = this.resize.bind(this);
 		this.resize();
 
-		requestAnimationFrame(this.render.bind(this));
+		window.requestAnimationFrame(this.render.bind(this));
 	}
 
 	_setupCamera() {
@@ -47,6 +47,7 @@ class App {
 		this._scene.add(cube);
 		this._cube = cube;
 	}
+
 	resize() {
 		const width = this._divContainer.clientWidth;
 		const height = this._divContainer.clientHeight;
@@ -64,11 +65,12 @@ class App {
 	}
 
 	update(time) {
-		time *= 0.001;
+		time *= 0.001; //milisecond to second unit
 		this._cube.rotation.x = time;
 		this._cube.rotation.y = time;
 	}
 }
+
 window.onload = function () {
 	new App();
 };

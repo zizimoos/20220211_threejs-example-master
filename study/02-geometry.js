@@ -31,7 +31,7 @@ class App {
 		const width = this._divContainer.clientWidth;
 		const height = this._divContainer.clientHeight;
 		const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 100);
-		camera.position.z = 10;
+		camera.position.z = 50;
 		this._camera = camera;
 	}
 	_setupLight() {
@@ -42,66 +42,134 @@ class App {
 		this._scene.add(light);
 	}
 
+	///////////////////////////////////////////////////////////////////////////
+
 	// _setupModel() {
-	// 	const loader = new FontLoader();
-
-	// 	async function loadFont(that) {
-	// 		const url = "../examples/fonts/helvetiker_regular.typeface.json";
-	// 		const font = await new Promise((resolve, reject) => {
-	// 			loader.load(url, resolve, undefined, reject);
-	// 		});
-
-	// 		const geometry = new TextGeometry("Tessa", {
-	// 			font: font,
-	// 			size: 5,
-	// 			height: 1.5,
-	// 			curveSegments: 4,
-	// 			bevelEnable: true,
-	// 			bevelThickness: 15,
-	// 			bevelSize: 5,
-	// 			bevelSegments: 5,
-	// 		});
-
-	// 		const fillMaterial = new THREE.MeshPhongMaterial({ color: 0x515151 });
-	// 		const cube = new THREE.Mesh(geometry, fillMaterial);
-
-	// 		const lineMaterial = new THREE.LineBasicMaterial({ color: 0xffff00 });
-	// 		const line = new THREE.LineSegments(
-	// 			new THREE.WireframeGeometry(geometry),
-	// 			lineMaterial
-	// 		);
-	// 		const group = new THREE.Group();
-	// 		group.add(cube);
-	// 		group.add(line);
-
-	// 		that._scene.add(group);
-	// 		that._cube = group;
+	// 	const points = [];
+	// 	for (let i = 0; i < 10; i++) {
+	// 		points.push(new THREE.Vector2(Math.sin(i * 0.2) * 3 + 3, (i - 5) * 0.8));
+	// 		// const x = i * 0.1;
+	// 		// const y = Math.sin(x);
+	// 		// const z = Math.cos(x);
+	// 		// points.push(new THREE.Vector3(x, y, z));
 	// 	}
+	// 	const geometry = new THREE.LatheGeometry(points, 50);
 
-	// 	loadFont(this);
+	// 	const fillMaterial = new THREE.MeshPhongMaterial({ color: 0x515151 });
+	// 	const cube = new THREE.Mesh(geometry, fillMaterial);
 
-	// 	// const shape = new THREE.Shape();
-	// 	// const x = -2.5;
-	// 	// const y = -5;
-	// 	// shape.moveTo(x + 2.5, y + 2.5);
-	// 	// shape.bezierCurveTo(x + 2.5, y + 2.5, x + 2, y, x, y);
-	// 	// shape.bezierCurveTo(x - 3, y, x - 3, y + 3.5, x - 3, y + 3.5);
-	// 	// shape.bezierCurveTo(x - 3, y + 5.5, x - 1.5, y + 7.7, x + 2.5, y + 9.5);
-	// 	// shape.bezierCurveTo(x + 6, y + 7.7, x + 8, y + 4.5, x + 8, y + 3.5);
-	// 	// shape.bezierCurveTo(x + 8, y + 3.5, x + 8, y, x + 5, y);
-	// 	// shape.bezierCurveTo(x + 3.5, y, x + 2.5, y + 2.5, x + 2.5, y + 2.5);
+	// 	const lineMaterial = new THREE.LineBasicMaterial({ color: 0xffff00 });
+	// 	const line = new THREE.LineSegments(
+	// 		new THREE.WireframeGeometry(geometry),
+	// 		lineMaterial
+	// 	);
+	// 	const group = new THREE.Group();
+	// 	group.add(cube);
+	// 	group.add(line);
 
-	// 	// const settings = {
-	// 	// 	steps: 4,
-	// 	// 	depth: 4,
-	// 	// 	bevelEnable: true,
-	// 	// 	bevelThickness: 0.5,
-	// 	// 	bevelSize: 0.3,
-	// 	// 	bevelSegments: 5,
-	// 	// };
-
-	// 	// const geometry = new THREE.ExtrudeGeometry(shape, settings);
+	// 	this._scene.add(group);
+	// 	this._cube = group;
 	// }
+
+	///////////////////////////////////////////////////////////////////////////
+
+	_setupModel() {
+		const loader = new FontLoader();
+
+		async function loadFont(that) {
+			const url = "../examples/fonts/helvetiker_regular.typeface.json";
+			const font = await new Promise((resolve, reject) => {
+				loader.load(url, resolve, undefined, reject);
+			});
+			const geometry = new TextGeometry("Hello", {
+				font: font,
+				size: 10,
+				height: 2,
+				curveSegments: 3,
+				bevelEnabled: true,
+				bevelThickness: 1,
+				bevelSize: 0.5,
+				bevelOffset: 0,
+				bevelSegments: 3,
+			});
+
+			const fillMaterial = new THREE.MeshPhongMaterial({ color: 0x515151 });
+			const cube = new THREE.Mesh(geometry, fillMaterial);
+
+			const lineMaterial = new THREE.LineBasicMaterial({ color: 0xffff00 });
+			const line = new THREE.LineSegments(
+				new THREE.WireframeGeometry(geometry),
+				lineMaterial
+			);
+			const group = new THREE.Group();
+			group.add(cube);
+			group.add(line);
+
+			that._scene.add(group);
+			that._cube = group;
+		}
+
+		loadFont(this);
+	}
+
+	///////////////////////////////////////////////////////////////////////////
+
+	// _setupModel() {
+	// 	const shape = new THREE.Shape();
+	// 	const x = -2.5;
+	// 	const y = -5;
+	// 	shape.moveTo(x + 2.5, y + 2.5);
+	// 	shape.bezierCurveTo(x + 2.5, y + 2.5, x + 2, y, x, y);
+	// 	shape.bezierCurveTo(x - 3, y, x - 3, y + 3.5, x - 3, y + 3.5);
+	// 	shape.bezierCurveTo(x - 3, y + 5.5, x - 1.5, y + 7.7, x + 2.5, y + 9.5);
+	// 	shape.bezierCurveTo(x + 6, y + 7.7, x + 8, y + 4.5, x + 8, y + 3.5);
+	// 	shape.bezierCurveTo(x + 8, y + 3.5, x + 8, y, x + 5, y);
+	// 	shape.bezierCurveTo(x + 3.5, y, x + 2.5, y + 2.5, x + 2.5, y + 2.5);
+	// 	shape.closePath();
+
+	// 	const settings = {
+	// 		steps: 4,
+	// 		depth: 4,
+	// 		bevelEnable: true,
+	// 		bevelThickness: 0.5,
+	// 		bevelSize: 0.3,
+	// 		bevelSegments: 5,
+	// 	};
+
+	// 	// // const geometry = new THREE.ShapeGeometry(shape);
+	// 	// const geometry = new THREE.ExtrudeGeometry(shape, settings);
+	// 	// const points = shape.getPoints();
+	// 	// geometry.setFromPoints(points);
+
+	// 	// const material = new THREE.LineBasicMaterial({ color: 0xffff00 });
+	// 	// const line = new THREE.Line(geometry, material);
+
+	// 	// this._scene.add(line);
+
+	// 	////////////////////////////////////////////////////////////////////
+	// 	const geometry = new THREE.ExtrudeGeometry(shape, settings);
+	// 	// const geometry = new THREE.ShapeGeometry(shape);
+
+	// 	const fillMaterial = new THREE.MeshPhongMaterial({
+	// 		color: 0x515151,
+	// 	});
+	// 	const cube = new THREE.Mesh(geometry, fillMaterial);
+
+	// 	const lineMaterial = new THREE.LineBasicMaterial({ color: 0xffff00 });
+	// 	const line = new THREE.LineSegments(
+	// 		new THREE.WireframeGeometry(geometry),
+	// 		lineMaterial
+	// 	);
+
+	// 	const group = new THREE.Group();
+	// 	group.add(cube);
+	// 	group.add(line);
+
+	// 	this._scene.add(group);
+	// 	this._cube = group;
+	// }
+
+	///////////////////////////////////////////////////////////////////////////
 
 	// _setupModel() {
 	// 	class CutomSinCurve extends THREE.Curve {
@@ -117,8 +185,20 @@ class App {
 	// 		}
 	// 	}
 	// 	const path = new CutomSinCurve(5);
-	// 	const geometry = new THREE.TubeGeometry(path, 90, 2, 4, false);
 
+	// 	///////////////////////////////////////////////////////////////////////////
+
+	// 	// const geometry = new THREE.BufferGeometry();
+	// 	// const points = path.getPoints(50);
+	// 	// geometry.setFromPoints(points);
+
+	// 	// const material = new THREE.LineBasicMaterial({ color: 0xffff00 });
+	// 	// const line = new THREE.Line(geometry, material);
+	// 	// this._scene.add(line);
+
+	// 	///////////////////////////////////////////////////////////////////////////
+
+	// 	const geometry = new THREE.TubeGeometry(path, 90, 2, 8, false);
 	// 	const fillMaterial = new THREE.MeshPhongMaterial({ color: 0x515151 });
 	// 	const cube = new THREE.Mesh(geometry, fillMaterial);
 	// 	const lineMaterial = new THREE.LineBasicMaterial({ color: 0xffff00 });
@@ -133,27 +213,35 @@ class App {
 	// 	this._cube = group;
 	// }
 
-	_setupModel() {
-		const geometry = new THREE.TorusKnotGeometry(0.6, 0.1, 512, 16, 1, 12);
-		const fillMaterial = new THREE.MeshPhongMaterial({
-			color: 0x515151,
-		});
-		const cube = new THREE.Mesh(geometry, fillMaterial);
-		const lineMaterial = new THREE.LineBasicMaterial({ color: 0xffff00 });
-		const line = new THREE.LineSegments(
-			new THREE.WireframeGeometry(geometry),
-			lineMaterial
-		);
-		const group = new THREE.Group();
-		group.add(cube);
-		group.add(line);
-		this._scene.add(group);
-		this._cube = group;
-	}
+	/////////////////////////////////////////////////////////////////////////////
+
+	// _setupModel() {
+	// 	const geometry = new THREE.TorusKnotGeometry(0.6, 0.1, 512, 16, 1, 12);
+	// 	const fillMaterial = new THREE.MeshPhongMaterial({
+	// 		color: 0x515151,
+	// 	});
+	// 	const cube = new THREE.Mesh(geometry, fillMaterial);
+
+	// 	const lineMaterial = new THREE.LineBasicMaterial({ color: 0xffff00 });
+	// 	const line = new THREE.LineSegments(
+	// 		new THREE.WireframeGeometry(geometry),
+	// 		lineMaterial
+	// 	);
+
+	// 	const group = new THREE.Group();
+	// 	group.add(cube);
+	// 	group.add(line);
+
+	// 	this._scene.add(group);
+	// 	this._cube = group;
+	// }
+
+	/////////////////////////////////////////////////////////////////////////////
 
 	_setupControls() {
 		new OrbitControls(this._camera, this._divContainer);
 	}
+
 	resize() {
 		const width = this._divContainer.clientWidth;
 		const height = this._divContainer.clientHeight;

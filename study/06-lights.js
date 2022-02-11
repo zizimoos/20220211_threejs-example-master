@@ -37,17 +37,20 @@ class App {
 		this._camera = camera;
 	}
 	_setupLight() {
-		const color = 0xffffff;
+		const color = "azure";
 		const color2 = "#BB7A1C";
 		const intensity = 1;
 
 		RectAreaLightUniformsLib.init();
+
+		const ambientLight = new THREE.AmbientLight(color, 0.2);
 
 		const light = new THREE.RectAreaLight(color, 10, 10, 1);
 		light.position.set(0, 5, 0);
 		light.rotation.x = THREE.Math.degToRad(-90);
 
 		this._scene.add(light);
+		this._scene.add(ambientLight);
 		this._light = light;
 
 		const helper = new RectAreaLightHelper(light);
@@ -68,6 +71,7 @@ class App {
 		const ground = new THREE.Mesh(groundGeometry, groundMaterial);
 		ground.rotation.x = THREE.Math.degToRad(-90);
 		this._scene.add(ground);
+
 		//big sphere
 		const bigSphereGeometry = new THREE.SphereGeometry(1.5, 64, 64, 0, Math.PI);
 		const bigSphereMaterial = new THREE.MeshStandardMaterial({
@@ -78,6 +82,7 @@ class App {
 		const bigSphere = new THREE.Mesh(bigSphereGeometry, bigSphereMaterial);
 		bigSphere.rotation.x = THREE.Math.degToRad(-90);
 		this._scene.add(bigSphere);
+
 		//torus
 		const torusGeometry = new THREE.TorusBufferGeometry(0.4, 0.1, 32, 32);
 		const torusMaterial = new THREE.MeshStandardMaterial({
@@ -132,7 +137,7 @@ class App {
 
 		const smallSpherePivot = this._scene.getObjectByName("smallSpherePivot");
 		if (smallSpherePivot) {
-			smallSpherePivot.rotation.y = THREE.Math.degToRad(time * 100);
+			smallSpherePivot.rotation.y = THREE.Math.degToRad(time * 50);
 
 			if (this._light.target) {
 				const smallSphere = smallSpherePivot.children[0];

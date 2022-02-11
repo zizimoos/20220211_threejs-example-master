@@ -48,75 +48,82 @@ class App {
 	_setupControls() {
 		new OrbitControls(this._camera, this._divContainer);
 	}
+
+	///////////////////////////////////////////////////////////////////////////////////////////
+
+	// _setupModel() {
+	// 	const material = new THREE.MeshPhysicalMaterial({
+	// 		visible: true,
+	// 		transparent: false,
+	// 		opacity: 0.5,
+	// 		depthTest: true,
+	// 		depthWrite: true,
+	// 		color: 0xff0000,
+	// 		emissive: 0x000000,
+	// 		specular: 0x000000,
+	// 		wireframe: false,
+	// 		side: THREE.DoubleSide,
+	// 		shininess: 0,
+	// 		roughness: 1,
+	// 		metalness: 0.5,
+	// 		flatShading: false,
+	// 		clearcoat: 0.5,
+	// 		clearcoatRoughness: 0.2,
+	// 	});
+	// 	const box = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), material);
+	// 	box.position.set(-1, 0, 0);
+	// 	this._scene.add(box);
+
+	// 	const sphere = new THREE.Mesh(
+	// 		new THREE.SphereGeometry(0.7, 32, 32),
+	// 		material
+	// 	);
+	// 	sphere.position.set(1, 0, 0);
+	// 	this._scene.add(sphere);
+	// }
+
+	///////////////////////////////////////////////////////////////////////////////////////////
+
 	_setupModel() {
-		const material = new THREE.MeshPhysicalMaterial({
-			visible: true,
-			transparent: false,
-			opacity: 0.5,
-			depthTest: true,
-			depthWrite: true,
-			color: 0xff0000,
-			emissive: 0x000000,
-			specular: 0x000000,
-			wireframe: false,
-			side: THREE.DoubleSide,
-			shininess: 0,
-			roughness: 1,
-			metalness: 0,
-			flatShading: false,
-			clearcoat: 1,
-			clearcoatRoughness: 0,
-		});
-		const box = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), material);
+		const textureLoader = new THREE.TextureLoader();
+		const map = textureLoader.load(
+			"../examples/textures/uv_grid_opengl.jpg",
+			(texture) => {
+				texture.repeat.x = 1;
+				texture.repeat.y = 1;
+
+				texture.wrapS = THREE.ClampToEdgeWrapping;
+				texture.wrapT = THREE.ClampToEdgeWrapping;
+
+				texture.offset.x = 0;
+				texture.offset.y = 0;
+
+				texture.rotation = THREE.MathUtils.degToRad(0);
+				texture.center.x = 0.5;
+				texture.center.y = 0.5;
+
+				texture.magFilter = THREE.LinearFilter;
+				texture.minFilter = THREE.NearestMipmapLinearFilter;
+			}
+		);
+		const material = new THREE.MeshStandardMaterial({ map });
+
+		const box = new THREE.Mesh(
+			new THREE.BoxGeometry(1, 1, 1, 256, 256, 256),
+			material
+		);
 		box.position.set(-1, 0, 0);
 		this._scene.add(box);
 
 		const sphere = new THREE.Mesh(
-			new THREE.SphereGeometry(0.7, 32, 32),
+			new THREE.SphereGeometry(0.7, 512, 512),
 			material
 		);
 		sphere.position.set(1, 0, 0);
 		this._scene.add(sphere);
 	}
 
-	// _setupModel() {
-	// 	const textureLoader = new THREE.TextureLoader();
-	// 	const map = textureLoader.load(
-	// 		"../examples/textures/uv_grid_opengl.jpg",
-	// 		(texture) => {
-	// 			texture.repeat.x = 1;
-	// 			texture.repeat.y = 1;
-
-	// 			texture.wrapS = THREE.ClampToEdgeWrapping;
-	// 			texture.wrapT = THREE.ClampToEdgeWrapping;
-
-	// 			texture.offset.x = 0;
-	// 			texture.offset.y = 0;
-
-	// 			texture.rotation = THREE.MathUtils.degToRad(0);
-	// 			texture.center.x = 0.5;
-	// 			texture.center.y = 0.5;
-
-	// 			texture.magFilter = THREE.LinearFilter;
-	// 			texture.minFilter = THREE.NearestMipmapLinearFilter;
-	// 		}
-	// 	);
-	// 	const material = new THREE.MeshStandardMaterial({ map });
-
-	// 	const box = new THREE.Mesh(
-	// 		new THREE.BoxGeometry(1, 1, 1, 256, 256, 256),
-	// 		material
-	// 	);
-	// 	box.position.set(-1, 0, 0);
-	// 	this._scene.add(box);
-
-	// 	const sphere = new THREE.Mesh(
-	// 		new THREE.SphereGeometry(0.7, 512, 512),
-	// 		material
-	// 	);
-	// 	sphere.position.set(1, 0, 0);
-	// 	this._scene.add(sphere);
-	// }
+	///////////////////////////////////////////////////////////////////////////////////////////
 
 	// _setupModel() {
 	// 	const vertices = [];
@@ -139,7 +146,7 @@ class App {
 	// 	const material = new THREE.PointsMaterial({
 	// 		map: sprite,
 	// 		alphaTest: 0.5,
-	// 		color: 0xff0000,
+	// 		color: "yellowGreen",
 	// 		size: 0.05,
 	// 		sizeAttenuation: true,
 	// 	});
@@ -147,6 +154,8 @@ class App {
 	// 	const points = new THREE.Points(geometry, material);
 	// 	this._scene.add(points);
 	// }
+
+	///////////////////////////////////////////////////////////////////////////////////////////
 
 	// _setupModel() {
 	// 	const vertices = [-1, 1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0];
@@ -173,49 +182,57 @@ class App {
 	// 	this._scene.add(line);
 	// }
 
+	///////////////////////////////////////////////////////////////////////////////////////////
+
 	// _setupModel() {
 	// 	const textureLoader = new THREE.TextureLoader();
 	// 	const map = textureLoader.load(
-	// 		"./images/glass/Glass_Window_002_basecolor.jpg"
+	// 		"./images/glass/Glass_Window_004_basecolor.jpg"
 	// 	);
 	// 	const mapAO = textureLoader.load(
-	// 		"./images/glass/Glass_Window_002_ambientOcclusion.jpg"
+	// 		"./images/glass/Glass_Window_004_ambientOcclusion.jpg"
 	// 	);
 	// 	const mapHeight = textureLoader.load(
-	// 		"./images/glass/Glass_Window_002_height.png"
+	// 		"./images/glass/Glass_Window_004_height.png"
 	// 	);
 
 	// 	const mapNormal = textureLoader.load(
-	// 		"./images/glass/Glass_Window_002_normal.jpg"
+	// 		"./images/glass/Glass_Window_004_normal.jpg"
 	// 	);
 
 	// 	const mapRoughness = textureLoader.load(
-	// 		"./images/glass/Glass_Window_002_roughness.jpg"
+	// 		"./images/glass/Glass_Window_004_roughness.jpg"
 	// 	);
 
 	// 	const mapMetalic = textureLoader.load(
-	// 		"./images/glass/Glass_Window_002_metallic.jpg"
+	// 		"./images/glass/Glass_Window_004_metallic.jpg"
 	// 	);
 	// 	const mapAlpha = textureLoader.load(
-	// 		"./images/glass/Glass_Window_002_opacity.jpg"
+	// 		"./images/glass/Glass_Window_004_opacity.jpg"
 	// 	);
 	// 	const mapLight = textureLoader.load("./images/glass/light.jpg");
 
 	// 	const material = new THREE.MeshStandardMaterial({
 	// 		map,
 	// 		aoMap: mapAO,
-	// 		aoMapIntensity: 1,
+	// 		aoMapIntensity: 0.5,
+	// 		//
 	// 		normalMap: mapNormal,
+	// 		//
 	// 		displacementMap: mapHeight,
-	// 		displacementScale: 0.2,
-	// 		displacementBias: -0.15,
+	// 		displacementScale: 0.001,
+	// 		displacementBias: -0.001,
+	// 		//
 	// 		roughnessMap: mapRoughness,
 	// 		roughness: 1,
+	// 		//
 	// 		metalnessMap: mapMetalic,
 	// 		metalness: 0.5,
-	// 		// alphaMap: mapAlpha,
+	// 		//
+	// 		alphaMap: mapAlpha,
 	// 		transparent: true,
 	// 		side: THREE.DoubleSide,
+	// 		//
 	// 		lightMap: mapLight,
 	// 		lightMapIntensity: 0.2,
 	// 	});
@@ -242,6 +259,8 @@ class App {
 	// 	// const sphereHelper = new VertexNormalsHelper(sphere, 0.1, 0xffff00);
 	// 	// this._scene.add(sphereHelper);
 	// }
+
+	///////////////////////////////////////////////////////////////////////////////////////////
 
 	resize() {
 		const width = this._divContainer.clientWidth;
